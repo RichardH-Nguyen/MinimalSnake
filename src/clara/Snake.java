@@ -5,16 +5,18 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
+import java.util.Timer;
 
 /** Created by Clara on 3/31/16 */
 
 public class Snake extends TimerTask implements KeyListener {
 
-    int height = 300; int width = 400;   //pixels
+    int height = 600; int width = 800;   //pixels
     int squareSize = 50;
 
     int xSquares = width/squareSize;
     int ySquares = height/squareSize;
+
 
     int score = 0;
 
@@ -67,29 +69,29 @@ public class Snake extends TimerTask implements KeyListener {
             super.paintComponent(g);
 
             g.clearRect(0, 0, width, height);    //Clear panel, fill with black
-            g.setColor(Color.BLACK);
+            g.setColor(Color.DARK_GRAY);
             g.fillRect(0, 0, width, height);
 
             if (gameOver > 6) {                 // If gameOver indicates game is won, display message
-                g.setColor(Color.GREEN);
-                g.drawString(">-o~~~~~~~~~~~~~  SNAKE  ~~~~~~~~~~~~~o-<", 50, 50);    //  "art"
+                g.setColor(Color.YELLOW);
+                g.drawString(">-o~~~~~~~~~~~~~  SNAKE  ~~~~~~~~~~~~~o-<", 200, 100);    //  "art"
                 g.drawString("!!!! YOU WON !!! score: " + score, 100, 100);
             }
 
             else if (gameOver > 0 ) {          // If gameOver indicates game is over (won, lost, whatever) display score and countdown to next game
-                g.setColor(Color.GREEN);
-                g.drawString(">-o~~~~~~~~~~~~~  SNAKE  ~~~~~~~~~~~~~o-<", 50, 50);
+                g.setColor(Color.RED);
+                g.drawString(">-o~~~~~~~~~~~~~  SNAKE  ~~~~~~~~~~~~~o-<", 250, 100);
 
-                g.drawString("GAME OVER score: " + score, 120, 100);
-                g.drawString("try again in " + (gameOver+1)/2 + "...", 120,150);
-                g.drawString("press q to quit", 120, 200);
+                g.drawString("GAME OVER score: " + score, 240, 200);
+                g.drawString("try again in " + (gameOver+1)/2 + "...", 240,300);
+                g.drawString("press q to quit", 240, 400);
             }
 
             else {                             // Game is not over. Draw snake and kibble, wherever they are.
-                g.setColor(Color.BLUE);
+                g.setColor(Color.YELLOW);
                 g.fillRect(kibble[0] * squareSize, kibble[1] * squareSize, squareSize, squareSize);
 
-                g.setColor(Color.RED);
+                g.setColor(Color.BLUE);
                 for (int[] square : snake) {
                     g.fillRect(square[0] * squareSize, square[1] * squareSize, squareSize, squareSize);
                 }
@@ -148,6 +150,7 @@ public class Snake extends TimerTask implements KeyListener {
                     kibble = new int[]{(int) (Math.random() * xSquares), (int) (Math.random() * ySquares)};
                 } while (contains(kibble, snake));
             }
+
         }
 
         snakePanel.repaint();    // And in any case, repaint the snakePanel JPanel to redraw the game in the new state.
